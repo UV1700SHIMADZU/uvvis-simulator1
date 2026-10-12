@@ -55,8 +55,30 @@ footer .s{grid-column:1/3}footer .v.h{display:none}footer .v b{font-size:12px}
 body[data-pg="3d"] #pages{display:none}body:not([data-pg="3d"]) #side,body:not([data-pg="3d"]) #stage,body:not([data-pg="3d"]) #info,body:not([data-pg="3d"]) footer{display:none}
 @media(max-width:820px){#nav{width:100%;overflow-x:auto;margin-left:0}#nav button{flex:none}header{flex-wrap:wrap}#pages{order:1;overflow:visible}}
 .crs{padding-left:18px;margin:6px 0}.crs li{margin:3px 0}
+@keyframes rise{from{transform:scaleY(0)}to{transform:scaleY(1)}}@keyframes drop{0%{transform:translateY(0);opacity:0}15%{opacity:1}100%{transform:translateY(34px);opacity:0}}@keyframes fadein{from{opacity:0}to{opacity:1}}@keyframes ring{from{stroke-dashoffset:138}to{stroke-dashoffset:0}}@keyframes beam{to{stroke-dashoffset:-28}}@keyframes slide{from{transform:translateY(-30px);opacity:0}to{transform:none;opacity:1}}
+.rise{transform-box:fill-box;transform-origin:bottom;animation:rise 2s ease-out forwards}.dr{animation:drop 1s ease-in infinite}.fade,.tint{animation:fadein 2.5s forwards}.tint{animation-duration:3.5s;animation-delay:.5s;opacity:0}.ring{animation:ring 4s linear forwards}.bm{animation:beam 1s linear infinite}.slide{animation:slide .9s ease-out}.crs li.on{font-weight:700;color:#1f6fe8}.crs li{cursor:pointer}
+@keyframes glow{from{opacity:.3}to{opacity:.9}}@keyframes steam{0%{transform:translateY(0);opacity:0}30%{opacity:.7}100%{transform:translateY(-22px);opacity:0}}.glow{animation:glow 1.4s ease-in-out infinite alternate}.steam{animation:steam 2s ease-out infinite}
+.beam{fill:none;stroke-width:4;stroke-dasharray:10 6;animation:flow 1s linear infinite;opacity:0;transition:opacity .5s}.beam.g{stroke:#2ec46a}@keyframes flow{to{stroke-dashoffset:-16}}
+.lmp{opacity:.4;transition:all .5s}.lmp.lit{opacity:1;filter:drop-shadow(0 0 6px #ffcc55)}.mv{transition:transform .9s ease}.cv{opacity:0;transform:scale(1.6);transform-box:fill-box;transform-origin:center;transition:all .8s}.cv.on{opacity:.95;transform:none}
+#simSub{background:#0f1b33;color:#fff;border-radius:8px;padding:12px 16px;margin-top:8px;min-height:3.6em;font-size:16px;line-height:1.4;animation:fadein .6s}#simTl button{width:26px;height:26px;border-radius:50%;border:1px solid var(--bd);background:var(--pn);color:var(--tx);cursor:pointer;font-size:11px}#simTl button.on{background:var(--ac);color:#fff;border-color:var(--ac)}
+
+#cineStage{position:relative;width:100%;aspect-ratio:640/300;background:#05080f;overflow:hidden;border-radius:8px}
+#cineStage .vig{position:absolute;inset:0;pointer-events:none;z-index:1;box-shadow:inset 0 0 110px 20px rgba(0,0,0,.5);background:radial-gradient(ellipse at center,transparent 55%,rgba(0,0,0,.35))}
+.lb{position:absolute;left:0;right:0;height:9%;background:#000;z-index:3;display:flex;align-items:center;justify-content:space-between;padding:0 3%;color:#9fb0c8;font:600 clamp(8px,1.3vw,12px) system-ui,sans-serif;letter-spacing:.18em}
+.lb.t{top:0}.lb.b{bottom:0}
+#cFade{position:absolute;inset:0;background:#000;opacity:0;pointer-events:none;z-index:2}
+#cFade.go{animation:cutf .8s ease}
+@keyframes cutf{0%{opacity:.9}100%{opacity:0}}
+#cTitle{position:absolute;inset:0;z-index:4;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;background:rgba(3,8,18,.82);color:#fff;opacity:0;pointer-events:none;transition:opacity .8s;padding:0 8%}
+#cTitle.on{opacity:1}
+#cTitle h3{margin:0 0 .35em;font:700 clamp(16px,4vw,38px) Georgia,serif;letter-spacing:.04em}
+#cTitle p{margin:0;color:#ffd77a;font-size:clamp(10px,1.8vw,16px);letter-spacing:.12em;text-transform:uppercase}
+#cineStage #simSub{position:absolute;left:50%;transform:translateX(-50%);bottom:11%;width:88%;max-width:900px;z-index:3;background:rgba(0,0,0,.66);color:#fff;text-align:center;border-radius:6px;padding:.4em .8em;margin:0;min-height:0;font:500 clamp(10.5px,2.1vw,20px)/1.35 system-ui,sans-serif;text-shadow:0 1px 3px #000;transition:opacity .5s}
+#cineStage #simSub.hide{opacity:0}
+#cProg{position:absolute;left:0;right:0;bottom:0;height:3px;z-index:5;background:rgba(255,255,255,.15)}#cProg i{display:block;height:100%;width:0;background:var(--ac)}
+#cineStage:fullscreen{width:100vw;height:100vh;aspect-ratio:auto;border-radius:0}
 </style></head><body data-pg="3d">
-<header><b>3D UV-Vis SPECTROPHOTOMETER SIMULATOR</b><span>Referensi visual: Shimadzu UV-1700 · double beam · educational</span><nav id="nav"><button data-pg="3d" class="on">Alat 3D</button><button data-pg="calc">Perhitungan</button><button data-pg="cal">Kurva Kalibrasi</button><button data-pg="cr">Cr(VI) Kulit</button><button data-pg="info">Info Alat</button></nav></header>
+<header><b>3D UV-Vis SPECTROPHOTOMETER SIMULATOR</b><span>Referensi visual: Shimadzu UV-1700 · double beam · educational</span><nav id="nav"><button data-pg="3d" class="on">Alat 3D</button><button data-pg="calc">Perhitungan</button><button data-pg="cal">Kurva Kalibrasi</button><button data-pg="cr">Cr(VI) Kulit</button><button data-pg="sim">Simulasi Alat</button><button data-pg="info">Info Alat</button></nav></header>
 <aside id="side"><h4>Components</h4><div id="list"></div></aside>
 <main id="stage"><canvas id="cv"></canvas>
 <div class="tb"><button id="bRot">ROTATE</button><button id="bZi">ZOOM +</button><button id="bZo">ZOOM −</button><button id="bRes">RESET VIEW</button><button id="bEx">EXPLODED VIEW</button><button id="bLid">OPEN COMPARTMENT</button>
@@ -81,11 +103,12 @@ body[data-pg="3d"] #pages{display:none}body:not([data-pg="3d"]) #side,body:not([
 <div id="ck" style="margin-top:8px"></div></div>
 </div></div><div class="pg" id="pg-cr"><div class="pgw"><h2>Penetapan Kadar Cr(VI) pada Kulit</h2>
 <p class="mu">Simulasi metode kolorimetri difenilkarbazida (DPC) mengacu ISO 17075-1:2017. Semua angka di sini adalah <b>Simulated educational data</b>, bukan data eksperimen asli.</p>
-<div class="card"><h4 style="margin-top:0">Prinsip &amp; alur kerja</h4>
-<p>Cr(VI) bebas diekstraksi dari kulit dengan buffer fosfat (pH ± 8). Pada suasana asam, Cr(VI) bereaksi dengan 1,5-difenilkarbazida membentuk kompleks merah-ungu yang diukur pada <b>540 nm</b>. Hasil sangat bergantung pada kondisi ekstraksi.</p>
-<ol class="crs"><li>Timbang sampel kulit yang digunting kecil (tipikal ±2 g).</li><li>Ekstraksi dengan buffer fosfat pH ± 8 sambil diaduk (tipikal ±3 jam, volume ±100 mL), lalu saring.</li><li>Asamkan aliquot dengan asam fosfat, tambahkan larutan DPC; warna merah-ungu muncul.</li><li>Ukur absorbansi pada 540 nm. Ekstrak tanpa DPC diukur juga untuk koreksi warna ekstrak.</li><li>Hitung konsentrasi dari kurva kalibrasi, lalu kadar dalam mg/kg kulit.</li></ol>
-<p style="font-size:11px;color:var(--mu)">Jumlah sampel, volume, dan waktu di atas bersifat tipikal; ikuti standar resmi yang berlaku. Cr(VI) bersifat toksik dan karsinogenik, jadi tangani dengan APD.</p>
-<button class="btn" id="cr3d">Atur λ 540 nm &amp; lihat di Alat 3D</button></div>
+<div class="card"><h4 style="margin-top:0">Alur kerja (prosedur laboratorium)</h4>
+<p>Cr(VI) bereaksi dengan difenilkarbazida (DPC) pada pH 2,0 membentuk kompleks merah-ungu yang diukur pada <b>540 nm</b>. Sampel tanpa DPC (blanko sampel) diukur juga untuk koreksi warna.</p>
+<div id="wfT" class="tabs"></div><div id="wfS"></div><div id="wfC" style="font-weight:700;margin:8px 0"></div>
+<ol id="wfL" class="crs"></ol>
+<button class="btn" id="wfP">Jeda</button> <button class="btn" id="wfN">Langkah berikutnya</button> <button class="btn" id="cr3d">Atur λ 540 nm &amp; lihat di Alat 3D</button>
+<p style="font-size:12px;color:var(--mu);margin-top:8px">Larutan kerja: C₁V₁ = C₂V₂ → 5 mg/L × 1; 2; 3; 4; 5 mL / 50 mL = 0,1; 0,2; 0,3; 0,4; 0,5 mg/L. Preparasi sampel: massa kulit 0,4 g dan labu takar akhir 250 mL (dipakai sebagai massa dan V pada rumus kadar). Analisis: FP = V labu takar / V pipet = 50 / 0,5 = 100 (pemindahan 25 mL ke piala gelas tidak mengubah konsentrasi).</p></div>
 <div class="card"><h4 style="margin-top:0">1. Spektrum kompleks Cr(VI)–DPC</h4>
 <canvas id="crs" width="600" height="320" style="width:100%;height:auto;background:#fff8;border-radius:6px"></canvas>
 <div class="f" style="grid-template-columns:1fr 70px;margin-top:6px"><input type="range" id="crL" min="400" max="700" value="540"><b id="crLr"></b></div>
@@ -99,6 +122,32 @@ body[data-pg="3d"] #pages{display:none}body:not([data-pg="3d"]) #side,body:not([
 <label>Jenis input</label><select id="crMd" style="background:#fffc;border:1px solid var(--bd);border-radius:5px;padding:4px"><option value="A">Absorbansi (A)</option><option value="C">Konsentrasi (C)</option></select><label id="crLa">A sampel + DPC</label><input type="number" id="crA" value="0.045" step=".001"><label id="crLb">A koreksi warna (tanpa DPC)</label><input type="number" id="crB" value="0.010" step=".001">
 <label>Massa kulit (g)</label><input type="number" id="crM" value="2.00" step=".01"><label>Volume labu takar (mL)</label><input type="number" id="crV" value="100"><label>Faktor pengenceran tambahan</label><input type="number" id="crD" value="1"></div>
 <div id="crR" style="margin-top:8px"></div></div></div></div>
+<div class="pg" id="pg-sim"><div class="pgw" style="max-width:980px"><h2>Simulasi Kerja Alat</h2><p class="mu">Tayangan sinematik otomatis dari sampel dimasukkan sampai hasil muncul di komputer: kamera bergerak mengikuti jalur cahaya, lengkap dengan subtitle (dan opsi narasi suara). Ini representasi edukasi yang disederhanakan.</p>
+<div class="card" style="padding:8px"><div id="cineStage"><svg id="simSvg" viewBox="0 0 640 300" style="width:100%;height:100%;display:block;background:linear-gradient(160deg,#d4e4f6,#f2f7fd)">
+<defs><path id="cab" d="M506,146 C526,146 526,112 548,112"/></defs>
+<rect x="10" y="60" width="500" height="200" rx="14" fill="#e6d9ac" stroke="#9a8a5a" stroke-width="2"/>
+<rect x="360" y="70" width="80" height="150" rx="4" fill="#2b2f36" opacity=".18" stroke="#6b7280" stroke-dasharray="4 3"/>
+<polyline id="s1D" class="beam" points="40,105 95,145 138,145" stroke="#f5b800"/><polyline id="s1W" class="beam" points="40,185 95,145 138,145" stroke="#f5b800"/>
+<polyline id="s2a" class="beam" points="144,145 200,145" stroke="#f5b800"/><polyline id="s2b" class="beam g" points="200,145 320,145"/>
+<polyline id="sR" class="beam g" points="320,145 320,105 450,105"/><polyline id="sS1" class="beam g" points="320,145 320,185 385,185"/><polyline id="sS2" class="beam g" points="385,185 450,185"/>
+<circle id="lD" class="lmp" cx="40" cy="105" r="13" fill="#9fb8ff" stroke="#4a6a8a" stroke-width="2"/><circle id="lW" class="lmp" cx="40" cy="185" r="13" fill="#ffd98a" stroke="#4a6a8a" stroke-width="2"/>
+<g id="swM" class="mv" style="transform:translate(95px,145px) rotate(35deg)"><rect x="-14" y="-2" width="28" height="4" fill="#d8dde4" stroke="#6b7280"/></g>
+<rect x="138" y="125" width="6" height="14" fill="#2b2f36"/><rect x="138" y="151" width="6" height="14" fill="#2b2f36"/>
+<rect x="258" y="125" width="6" height="14" fill="#2b2f36"/><rect x="258" y="151" width="6" height="14" fill="#2b2f36"/>
+<g id="grM" class="mv" style="transform:translate(200px,145px) rotate(10deg)"><rect x="-5" y="-22" width="10" height="44" fill="#d2ac4a" stroke="#8a6d1f"/></g>
+<g style="transform:translate(320px,145px) rotate(45deg)"><rect x="-2" y="-18" width="4" height="36" fill="#9fd0ff" stroke="#4a6a8a"/></g>
+<rect id="cR" class="cv" x="385" y="88" width="30" height="34" rx="3" fill="#cfeeff" stroke="#4a6a8a" stroke-width="2"/><rect id="cS" class="cv" x="385" y="168" width="30" height="34" rx="3" fill="#cfeeff" stroke="#4a6a8a" stroke-width="2"/>
+<g id="sg" class="mv" style="transform:none"><rect x="378" y="135" width="44" height="24" rx="4" fill="#f4f1e6" stroke="#6b7280" stroke-width="1.5"/><circle cx="387" cy="143" r="3.5" fill="#2b6fd6"/><circle cx="396" cy="150" r="3.5" fill="#e8851c"/><circle cx="405" cy="143" r="3.5" fill="#2b6fd6"/><circle cx="414" cy="150" r="3.5" fill="#e8851c"/><circle cx="396" cy="143" r="3.5" fill="#e8851c"/><circle cx="414" cy="143" r="3.5" fill="#2b6fd6"/><circle cx="387" cy="152" r="3.5" fill="#2b6fd6"/><circle cx="405" cy="152" r="3.5" fill="#e8851c"/><text x="400" y="130" font-size="8" font-weight="700" text-anchor="middle" fill="#35506b">Silika gel</text></g>
+<rect id="lid" class="mv" x="360" y="70" width="80" height="150" rx="4" fill="#d9ccaa" fill-opacity=".6" stroke="#9a8a5a" stroke-width="2" style="transform-box:fill-box;transform-origin:top"/>
+<rect x="450" y="85" width="28" height="120" rx="3" fill="#2b2f36"/><rect id="dG" x="450" y="85" width="28" height="120" rx="3" fill="#7fe3a0" style="opacity:0;transition:opacity .5s"/>
+<rect id="adc" x="486" y="128" width="20" height="36" rx="3" fill="#4b5563" style="transition:fill .5s"/>
+<use href="#cab" fill="none" stroke="#4b5563" stroke-width="3"/>
+<g id="pk" style="opacity:0;transition:opacity .4s"><circle r="4" fill="#1f6fe8"><animateMotion dur="1.6s" repeatCount="indefinite"><mpath href="#cab"/></animateMotion></circle><circle r="4" fill="#1f6fe8"><animateMotion dur="1.6s" begin=".5s" repeatCount="indefinite"><mpath href="#cab"/></animateMotion></circle><circle r="4" fill="#1f6fe8"><animateMotion dur="1.6s" begin="1s" repeatCount="indefinite"><mpath href="#cab"/></animateMotion></circle></g>
+<rect x="548" y="66" width="84" height="92" rx="6" fill="#1f2937"/><rect x="553" y="71" width="74" height="70" fill="#0b1a33"/><rect x="580" y="158" width="20" height="10" fill="#4b5563"/><rect x="568" y="168" width="44" height="6" rx="2" fill="#4b5563"/>
+<text id="m1" x="557" y="84" font-size="8" fill="#fff"></text><text id="m2" x="557" y="99" font-size="9" fill="#9fb8ff"></text><text id="m3" x="557" y="125" font-size="22" font-weight="700" fill="#7fe3a0"></text><text id="m4" x="557" y="137" font-size="8" fill="#ffe28a"></text>
+<g font-size="9" fill="#35506b" text-anchor="middle"><text x="40" y="86">Lampu D2</text><text x="40" y="214">Halogen</text><text x="95" y="172">Cermin pengalih</text><text x="141" y="116">Entrance slit</text><text x="200" y="182">Grating</text><text x="261" y="116">Exit slit</text><text x="320" y="214">Beam splitter</text><text x="400" y="80">Reference</text><text x="400" y="216">Sampel</text><text x="464" y="76" id="ti0" style="opacity:0;transition:opacity .5s" font-weight="700" fill="#1f6fe8">I₀ = 100</text><text x="464" y="222" id="ti" style="opacity:0;transition:opacity .5s" font-weight="700" fill="#c2185b">I = 40</text><text x="464" y="236">Detektor</text><text x="496" y="176">ADC</text><text x="590" y="188" font-size="10" font-weight="700">Komputer</text><text x="527" y="104" font-size="8">USB</text></g>
+</svg><div class="vig"></div><div class="lb t"><span id="cSc"></span><span>UV-1700 · SIMULASI</span></div><div class="lb b"></div><div id="cFade"></div><div id="cTitle"><h3></h3><p></p></div><div id="simSub"></div><div id="cProg"><i></i></div></div>
+<div style="display:flex;gap:6px;flex-wrap:wrap;margin-top:8px;align-items:center"><button class="btn" id="simPrev">◀</button><button class="btn" id="simPlay">Jeda</button><button class="btn" id="simNext">▶</button><button class="btn" id="simRe">Ulangi</button><button class="btn" id="simVoice">🔇 Narasi: Mati</button><button class="btn" id="simFs">⛶ Layar penuh</button><span id="simTl" style="display:flex;gap:4px;flex-wrap:wrap;margin-left:6px"></span></div></div></div></div>
 <div class="pg" id="pg-info"><div class="pgw"><h2>Info Alat</h2><p class="mu">Ringkasan instrumen yang dijadikan referensi.</p><div class="card"><h4 style="margin-top:0">Spesifikasi Shimadzu UV-1700</h4><div class="r"><span>Model</span><b>Shimadzu UV-1700 PharmaSpec (sudah tidak dijual)</b></div><div class="r"><span>Rentang panjang gelombang</span><b>190–1100 nm</b></div><div class="r"><span>Spectral bandwidth</span><b>1 nm (190–900 nm)</b></div><div class="r"><span>Sistem fotometri</span><b>Double-beam optics</b></div><div class="r"><span>Sumber cahaya</span><b>Lampu deuterium + lampu halogen</b></div><div class="r"><span>Pergantian lampu</span><b>Otomatis, 295–364 nm (default 340,8 nm)</b></div><div class="r"><span>Monokromator</span><b>Aberration-corrected blazed holographic grating</b></div><div class="r"><span>Detektor</span><b>Silicon photodiode</b></div><div class="r"><span>Stray light</span><b>Maks. 0,04 %</b></div><div class="r"><span>Rentang fotometrik</span><b>−0,5 s.d. +3,0 Abs</b></div><div class="r"><span>Jarak antar berkas</span><b>100 mm</b></div><div class="r"><span>Berat</span><b>±17 kg</b></div><p style="font-size:12px;color:var(--mu);margin-top:8px">Mode ukur: photometric (termasuk multi-wavelength), spectrum, dan kinetics lewat software UVProbe; mendukung validasi hardware (IQ/OQ). Sumber: <a href="https://speciation.net/Appl/Techniques/technique.html?id=1297" target="_blank" rel="noopener" style="color:var(--ac)">daftar spesifikasi Shimadzu Europe</a> dan <a href="https://chem.uci.edu/~dmitryf/LSL/manuals/Shimadzu%20UV-1700%20users%20guide.pdf" target="_blank" rel="noopener" style="color:var(--ac)">UV-1700 User's Guide</a>. Angka pada brosur reseller bisa berbeda; cek datasheet Shimadzu untuk unit kamu.</p></div></div></div></section>
 <footer><div class="s"><small style="color:var(--mu)">WAVELENGTH 190 — 1100 nm</small><input type="range" id="sl" min="190" max="1100" value="540"></div>
 <div class="v"><small>λ (nm)</small><input type="number" id="wn" value="540" min="190" max="1100" style="width:70px"></div>
@@ -472,6 +521,125 @@ g.strokeStyle='#1f6fe8';g.setLineDash([5,5]);g.beginPath();g.moveTo(sc.X(lam),sc
 g.fillStyle='#b0206a';g.beginPath();g.arc(sc.X(540),sc.Y(f(540)),6,0,7);g.fill();g.font='bold 16px sans-serif';g.textAlign='left';g.fillText('λmax = 540 nm',sc.X(540)+10,sc.Y(f(540))+16);
 $('#crLr').textContent=lam+' nm';$('#crSr').innerHTML=`<span>A pada ${lam} nm <i style="display:inline-block;width:14px;height:14px;border-radius:50%;vertical-align:middle;background:#b0206a;opacity:${Math.min(1,.15+net*2.2)}"></i></span><b>${fm(f(lam))} (${(f(lam)/Ap*100).toFixed(0)} % dari A maks)</b>`}
 crTbl();
+
+let uid=0;const FP_='M-26,0 C-42,-30 -12,-50 -6,-62 L-6,-112 L6,-112 L6,-62 C12,-50 42,-30 26,0 Z';
+const Fk=(x,y,o)=>{o=Object.assign({lv:.5,col:'#bfe8ff',s:1,lab:'',foil:0,tint:0,anim:1},o);const id='cp'+(++uid),h=o.lv*92;
+return `<g transform="translate(${x},${y}) scale(${o.s})"><clipPath id="${id}"><path d="${FP_}"/></clipPath><g clip-path="url(#${id})"><rect class="${o.anim?'rise':''}" x="-45" y="${-h}" width="90" height="${h}" fill="${o.col}" opacity=".85"/>${o.tint?`<rect class="tint" x="-45" y="${-h}" width="90" height="${h}" fill="#b0206a"/>`:''}</g><path d="${FP_}" fill="#cfeeff" fill-opacity=".25" stroke="#4a6a8a" stroke-width="2"/><line x1="-8" x2="8" y1="-92" y2="-92" stroke="#222" stroke-width="1.5"/>${o.foil?`<path class="fade" d="${FP_}" fill="#cfd4da" stroke="#8d96a0" stroke-width="2"/>`:''}<text y="${18}" text-anchor="middle" font-size="${12/Math.max(o.s,.6)}" fill="#35506b">${o.lab}</text></g>`};
+const Pp=(x,y,col,v)=>`<g class="slide" transform="translate(${x},${y})"><rect x="-4" y="-70" width="8" height="78" rx="4" fill="#e8f0f8" stroke="#5b6b82" stroke-width="1.5"/><rect x="-3" y="-30" width="6" height="36" fill="${col}"/><ellipse cy="-74" rx="9" ry="9" fill="#c2185b"/><path d="M-4,8L0,20L4,8Z" fill="#5b6b82"/><text x="14" y="-30" font-size="12" fill="#35506b">${v}</text></g>`;
+const Dr=(x,y,c)=>[0,.35,.7].map(d=>`<circle class="dr" style="animation-delay:${d}s" cx="${x}" cy="${y}" r="3.5" fill="${c}"/>`).join('');
+const Bal=(x,y,t,c)=>`<g transform="translate(${x},${y})"><rect x="-60" y="-16" width="120" height="16" rx="4" fill="#9aa4b0"/><rect x="-26" y="-13" width="52" height="10" fill="#0f1b33"/><text y="-5" text-anchor="middle" font-size="9" fill="#7fe3a0">${t}</text><rect x="-3" y="-30" width="6" height="14" fill="#7b8794"/><ellipse cy="-32" rx="34" ry="5" fill="#c9d1da" stroke="#7b8794"/><ellipse class="fade" cy="-38" rx="12" ry="6" fill="${c}"/></g>`;
+const Bk=(x,y,c,l,t)=>{const id='bk'+(++uid);return `<g transform="translate(${x},${y})"><clipPath id="${id}"><rect x="-36" y="-72" width="72" height="72"/></clipPath><g clip-path="url(#${id})"><rect class="rise" x="-36" y="-44" width="72" height="44" fill="${c}" opacity=".85"/>${t?'<rect class="tint" x="-36" y="-44" width="72" height="44" fill="#b0206a"/>':''}</g><path d="M-36,-72L-36,0L36,0L36,-72" fill="none" stroke="#4a6a8a" stroke-width="2"/><text y="18" text-anchor="middle" font-size="12" fill="#35506b">${l}</text></g>`};
+const Tm=(x,y)=>`<g transform="translate(${x},${y})"><circle r="22" fill="none" stroke="#d6dee8" stroke-width="5"/><circle class="ring" r="22" fill="none" stroke="#1f6fe8" stroke-width="5" stroke-dasharray="138" transform="rotate(-90)"/><text y="4" text-anchor="middle" font-size="10" fill="#35506b">5–10</text><text y="38" text-anchor="middle" font-size="11" fill="#35506b">menit</text></g>`;
+const Sp=(x,y,c,l)=>`<g transform="translate(${x},${y})"><rect x="-70" y="-50" width="140" height="50" rx="6" fill="#e6d9ac" stroke="#9a8a5a"/><rect x="-22" y="-44" width="44" height="22" fill="#4b34c8"/><text y="-28" text-anchor="middle" font-size="10" fill="#fff">540 nm</text><rect x="-14" y="-82" width="28" height="34" rx="3" fill="${c}" fill-opacity=".85" stroke="#4a6a8a"/><line class="bm" x1="-100" x2="100" y1="-65" y2="-65" stroke="#2ec46a" stroke-width="3" stroke-dasharray="8 6"/><text y="16" text-anchor="middle" font-size="11" fill="#35506b">${l}</text></g>`;
+const Tx=(x,y,t)=>`<text x="${x}" y="${y}" font-size="13" font-weight="700" fill="#1f6fe8">${t}</text>`;
+const Fu=(x,y,l)=>`<g transform="translate(${x},${y})"><rect x="-55" y="-70" width="110" height="70" rx="6" fill="#6b7280"/><rect x="-38" y="-56" width="76" height="44" rx="4" fill="#2b1a10"/><rect class="glow" x="-38" y="-56" width="76" height="44" rx="4" fill="#ff6a00"/><text y="16" text-anchor="middle" font-size="12" fill="#35506b">${l}</text></g>`;
+const Cw=(x,y,c)=>`<g transform="translate(${x},${y})"><path d="M-22,-18L22,-18L14,0L-14,0Z" fill="${c}" stroke="#6b7280" stroke-width="2"/></g>`;
+const Hp=(x,y,l)=>`<g transform="translate(${x},${y})"><rect x="-55" y="-12" width="110" height="12" rx="3" fill="#4b5563"/><rect class="glow" x="-46" y="-16" width="92" height="5" rx="2" fill="#ef4444"/><text y="16" text-anchor="middle" font-size="12" fill="#35506b">${l}</text></g>`;
+const St=(x,y)=>[-14,0,14].map((d,i)=>`<path class="steam" style="animation-delay:${i*.5}s" d="M${x+d},${y} q-5,-8 0,-14 q5,-6 0,-12" fill="none" stroke="#94a3b8" stroke-width="2.5" stroke-linecap="round"/>`).join('');
+const Fn=(x,y)=>`<path d="M${x-28},${y} L${x+28},${y} L${x+4},${y+24} L${x-4},${y+24}Z" fill="#dfe9f2" stroke="#4a6a8a" stroke-width="2"/>`;
+const Bt=(x,y,l)=>`<g transform="translate(${x},${y})"><rect x="-18" y="-60" width="36" height="60" rx="6" fill="#d6b36a" opacity=".85" stroke="#7a5a1a" stroke-width="2"/><rect x="-9" y="-72" width="18" height="14" rx="3" fill="#333"/><text y="16" text-anchor="middle" font-size="11" fill="#35506b">${l}</text></g>`;
+const P1=[
+['Timbang 0,4 g sampel kulit (untuk akurasi tambahkan 1 mL K₂Cr₂O₇ 1000 ppm), masukkan ke cawan, panaskan dalam tanur 750 °C selama 4 jam',()=>Tx(14,28,'+ 1 mL K₂Cr₂O₇ 1000 ppm')+Bal(80,165,'0,4 g','#8b5a2b')+Fu(235,165,'750 °C · 4 jam')],
+['Keluarkan sampel, tambahkan campuran Na₂CO₃ : Na₂B₄O₇ (rasio sesuai lembar kerja), pijarkan kembali dalam tanur 30 menit',()=>Tx(14,28,'+ Na₂CO₃ : Na₂B₄O₇')+Dr(85,60,'#cbd5e1')+Cw(85,155,'#9ca3af')+Fu(235,165,'30 menit')],
+['Dinginkan sampai suhu ruang, tambahkan air panas sedikit demi sedikit sambil dipanaskan di hotplate 200 °C sampai sampel larut',()=>Dr(160,55,'#7fb0ff')+St(160,75)+Bk(160,153,'#b9a27a','sampel + air panas')+Hp(160,165,'200 °C')],
+['Tuang ke beaker glass, panaskan di atas hotplate sampai larutan jernih',()=>St(160,75)+Bk(160,153,'#b9a27a','larutan jernih')+`<rect class="fade" x="124" y="109" width="72" height="44" fill="#cfeeff" opacity=".9"/>`+Hp(160,165,'200 °C')],
+['Dinginkan sampai suhu ruang, asamkan dengan H₃PO₄ sampai pH 1–2',()=>Dr(160,55,'#7fb0ff')+Tx(190,60,'H₃PO₄')+Bk(160,165,'#cfeeff','pH 1–2')],
+['Saring ke labu takar 250 mL, tera dengan akuades, homogenkan, masukkan ke botol sampel',()=>Fn(130,38)+Dr(130,70,'#cfeeff')+Fk(130,165,{lv:1,col:'#cfeeff',lab:'250 mL'})+Bt(250,165,'botol sampel')]];
+const WF=[{t:'1 Preparasi sampel',s:P1},{t:'2 Reagen & baku',s:[
+['Timbang 0,125 g difenilkarbazida (DPC)',()=>Bal(160,160,'0,125 g','#f3e6a0')],
+['Masukkan ke labu takar 25 mL, larutkan dengan aseton, bungkus aluminium foil',()=>Fk(160,165,{lv:1,col:'#f3e6a0',foil:1,lab:'DPC 25 mL (foil)'})],
+['Timbang 0,1414 g K₂Cr₂O₇, larutkan dalam labu takar 100 mL dengan akuades, tera → induk 500 mg/L',()=>Bal(85,165,'0,1414 g','#f59a2a')+Fk(230,165,{lv:1,col:'#f59a2a',lab:'500 mg/L'})],
+['Pipet 10 mL induk ke labu takar 100 mL, tera → baku 50 mg/L',()=>Pp(230,48,'#f59a2a','10 mL')+Dr(230,60,'#f59a2a')+Fk(230,165,{lv:1,col:'#f8c27a',lab:'50 mg/L'})+Fk(80,165,{lv:1,col:'#f59a2a',s:.8,anim:0,lab:'500 mg/L'})],
+['Pipet 10 mL baku 50 mg/L ke labu takar 100 mL, tera → baku 5 mg/L',()=>Pp(230,48,'#f8c27a','10 mL')+Dr(230,60,'#f8c27a')+Fk(230,165,{lv:1,col:'#fbe0b8',lab:'5 mg/L'})+Fk(80,165,{lv:1,col:'#f8c27a',s:.8,anim:0,lab:'50 mg/L'})]]},
+{t:'3 Larutan kerja',s:[
+['Pipet baku 5 mg/L ke labu takar 50 mL: 0; 1; 2; 3; 4; 5 mL (deret 0,0–0,5 mg/L)',()=>[0,1,2,3,4,5].map(i=>Fk(38+i*49,150,{lv:.2+i*.1,col:i?'#f8c27a':'#bfe8ff',s:.45,lab:(i/10).toFixed(1).replace('.',',')})).join('')+Tx(100,185,'mg/L')],
+['Tambahkan 1–2 tetes H₃PO₄ sebelum tanda tera, atur pH 2,0',()=>Dr(160,55,'#7fb0ff')+Fk(160,165,{lv:.75,col:'#bfe8ff',lab:'pH 2,0'})+Tx(185,60,'H₃PO₄')],
+['Tambahkan akuades hingga tanda tera',()=>Fk(160,165,{lv:1,col:'#bfe8ff',lab:'50 mL'})],
+['Tambahkan 0,5 mL DPC, diamkan 5–10 menit',()=>Dr(110,55,'#f3e6a0')+Fk(110,165,{lv:1,col:'#bfe8ff',tint:1,anim:0,lab:'+ 0,5 mL DPC'})+Tm(235,100)],
+['Ukur serapan pada 540 nm, mulai dari 0,0 mg/L sebagai blanko',()=>Sp(160,160,'#b0206a','Larutan kerja + DPC')]]},
+{t:'4 Analisis sampel',s:[
+['Pipet 0,5 mL larutan sampel (duplo) ke labu takar 50 mL',()=>Pp(160,48,'#d9c9a0','0,5 mL')+Dr(160,60,'#d9c9a0')+Fk(160,165,{lv:.1,col:'#d9c9a0',lab:'sampel'})],
+['Atur pH 2,0 dengan H₃PO₄, tera dengan akuades (FP = 50/0,5 = 100)',()=>Dr(160,55,'#7fb0ff')+Fk(160,165,{lv:1,col:'#e8dcc0',lab:'50 mL · pH 2,0'})],
+['Pipet 25 mL larutan ke piala gelas',()=>Fk(75,165,{lv:1,col:'#e8dcc0',s:.8,anim:0,lab:'50 mL'})+Pp(215,60,'#e8dcc0','25 mL')+Bk(235,165,'#e8dcc0','piala gelas')],
+['Tambahkan 0,5 mL DPC, homogenkan, diamkan 5–10 menit',()=>Dr(110,60,'#f3e6a0')+Bk(110,165,'#e8dcc0','+ 0,5 mL DPC',1)+Tm(240,100)],
+['Ukur serapan pada 540 nm. Sampel tanpa DPC (blanko sampel) diukur juga',()=>Sp(85,165,'#b0206a','Sampel + DPC')+Sp(240,165,'#e8dcc0','Blanko (tanpa DPC)')]]}];
+let wt=0,ws=0,wp=1;
+function wfRender(){const T=WF[wt],S=T.s[ws];$('#wfS').innerHTML=`<svg viewBox="0 0 320 190" style="width:100%;max-width:560px;height:auto;display:block;background:#ffffffaa;border-radius:8px">${S[1]()}</svg>`;
+$('#wfC').textContent=`${wt+1}.${ws+1}  ${S[0]}`;$('#wfL').innerHTML=T.s.map((x,i)=>`<li class="${i===ws?'on':''}" data-i="${i}">${x[0]}</li>`).join('');
+document.querySelectorAll('#wfL li').forEach(l=>l.onclick=()=>{ws=+l.dataset.i;wfRender()});
+$('#wfT').innerHTML=WF.map((x,i)=>`<button class="it${i===wt?' on':''}" data-i="${i}">${x.t}</button>`).join('');
+document.querySelectorAll('#wfT .it').forEach(b=>b.onclick=()=>{wt=+b.dataset.i;ws=0;wfRender()})}
+function wfNext(){ws++;if(ws>=WF[wt].s.length){ws=0;wt=(wt+1)%WF.length}wfRender()}
+$('#wfN').onclick=wfNext;$('#wfP').onclick=e=>{wp=!wp;e.target.textContent=wp?'Jeda':'Putar'};
+setInterval(()=>{if(wp&&document.body.dataset.pg==='cr')wfNext()},4500);wfRender();
+
+const SIM=[
+{t:'Alat dinyalakan. Lampu menyala dan alat melakukan inisialisasi serta pemanasan (warm-up).',l:'W',gr:0,m:['UVProbe','Initializing…','','Warm-up']},
+{t:'Pengguna memilih mode Photometric dan mengatur λ = 540 nm. Lampu halogen aktif karena 540 nm di daerah visible (di bawah ±340,8 nm lampu D2 yang aktif).',l:'W',gr:1,m:['UVProbe','λ = 540 nm','','Photometric']},
+{t:'Tutup sample compartment dibuka. Di dalamnya ada silika gel (penyerap lembap).',l:'W',gr:1,lid:1,m:['UVProbe','λ = 540 nm','','Buka tutup']},
+{t:'Keluarkan silika gel dari sample compartment dan letakkan di luar alat, supaya ruang kuvet kosong dan tidak menghalangi jalur cahaya.',l:'W',gr:1,lid:1,m:['UVProbe','λ = 540 nm','','Ambil silika']},
+{t:'Kuvet blanko (pelarut saja) dimasukkan ke holder reference dan holder sample.',l:'W',gr:1,lid:1,ref:1,sam:1,sc:'#cfeeff',m:['UVProbe','λ = 540 nm','','Blanko dipasang']},
+{t:'Tutup ditutup. Cahaya halogen dipantulkan cermin pengalih dan melewati entrance slit.',l:'W',gr:1,ref:1,sam:1,sc:'#cfeeff',b:1,m:['UVProbe','λ = 540 nm','','Mengukur…']},
+{t:'Grating menyebarkan cahaya, dan exit slit hanya meloloskan 540 nm (hijau).',l:'W',gr:1,ref:1,sam:1,sc:'#cfeeff',b:2,m:['UVProbe','λ = 540 nm','','Mengukur…']},
+{t:'Beam splitter membagi berkas menjadi dua: satu ke kuvet reference, satu ke kuvet sample.',l:'W',gr:1,ref:1,sam:1,sc:'#cfeeff',b:3,m:['UVProbe','λ = 540 nm','','Mengukur…']},
+{t:'Detektor menerima intensitas I₀ dari blanko. Tombol Auto Zero ditekan sehingga A = 0,000.',l:'W',gr:1,ref:1,sam:1,sc:'#cfeeff',b:3,det:1,i0:1,m:['UVProbe','λ = 540 nm','0.000','Auto Zero OK']},
+{t:'Berkas dihentikan sebentar, tutup dibuka, dan kuvet sampel (larutan berwarna) menggantikan blanko di holder sample.',l:'W',gr:1,lid:1,ref:1,sam:1,sc:'#b0206a',i0:1,m:['UVProbe','λ = 540 nm','0.000','Ganti sampel']},
+{t:'Tutup ditutup. Sampel menyerap sebagian cahaya, sehingga intensitas yang lewat (I) lebih kecil dari I₀.',l:'W',gr:1,ref:1,sam:1,sc:'#b0206a',b:3,dim:1,i0:1,i:1,m:['UVProbe','λ = 540 nm','','Mengukur…']},
+{t:'Detektor mengubah cahaya menjadi sinyal listrik, lalu ADC mengubahnya menjadi data digital.',l:'W',gr:1,ref:1,sam:1,sc:'#b0206a',b:3,dim:1,det:1,adc:1,i0:1,i:1,m:['UVProbe','λ = 540 nm','','Digitalisasi']},
+{t:'Data dikirim lewat kabel ke komputer. Software menghitung T = I/I₀ dan A = −log₁₀(T).',l:'W',gr:1,ref:1,sam:1,sc:'#b0206a',b:3,dim:1,det:1,adc:1,pk:1,i0:1,i:1,m:['UVProbe','λ = 540 nm','','Menghitung…']},
+{t:'Hasil tampil di layar komputer: Abs = 0,398 dan %T = 40,0.',l:'W',gr:1,ref:1,sam:1,sc:'#b0206a',b:3,dim:1,det:1,adc:1,pk:1,i0:1,i:1,m:['UVProbe','λ = 540 nm','0.398','%T = 40.0']}];
+SIM.forEach((x,i)=>x.sg=i>=3?2:1);
+SIM.push(Object.assign({},SIM[13],{t:'Dari cahaya sampai angka: absorbansi 0,398 berarti sekitar 40% cahaya diteruskan dan 60% diserap oleh sampel.'}));
+const CAMS=[[60,145,2],[100,145,2.2],[400,145,2.3],[420,130,2.3],[400,145,2.6],[110,145,2.4],[230,145,2.4],[330,150,2.2],[450,145,2.2],[400,145,2.6],[400,150,2.4],[490,140,2.6],[530,130,2.4],[585,110,2.8],[320,150,1]];
+SIM.forEach((x,i)=>x.cam=CAMS[i]);
+SIM[0].title=['Cara Kerja Spektrofotometer UV-Vis','Shimadzu UV-1700 · double beam'];
+SIM[14].title=['Selesai','A = 0,398 · %T = 40,0'];
+const $$=id=>document.getElementById(id);let si=0,simP=1;
+$$('simTl').innerHTML=SIM.map((x,i)=>`<button data-i="${i}">${i+1}</button>`).join('');
+document.querySelectorAll('#simTl button').forEach(b=>b.onclick=()=>simGo(+b.dataset.i));
+function simGo(i){si=(i+SIM.length)%SIM.length;const S=SIM[si],b=S.b||0,v=(id,c)=>$$(id).style.opacity=c?1:0;
+const sub=$$('simSub');sub.textContent=S.t;sub.style.animation='none';sub.offsetHeight;sub.style.animation='';
+$$('lD').classList.toggle('lit',S.l==='D');$$('lW').classList.toggle('lit',S.l==='W');
+$$('swM').style.transform=`translate(95px,145px) rotate(${S.l==='D'?-35:35}deg)`;$$('grM').style.transform=`translate(200px,145px) rotate(${S.gr?25:10}deg)`;
+$$('sg').style.transform=S.sg===2?'translate(60px,-110px)':'none';
+$$('lid').style.transform=`scaleY(${S.lid?.12:1})`;$$('cR').classList.toggle('on',!!S.ref);$$('cS').classList.toggle('on',!!S.sam);if(S.sc)$$('cS').setAttribute('fill',S.sc);
+v('s1D',S.l==='D'&&b>=1);v('s1W',S.l==='W'&&b>=1);v('s2a',b>=1);v('s2b',b>=2);v('sR',b>=3);v('sS1',b>=3);v('sS2',b>=3);if(b>=3)$$('sS2').style.opacity=S.dim?.3:1;
+$$('dG').style.opacity=S.det?.55:0;$$('adc').setAttribute('fill',S.adc?'#1f6fe8':'#4b5563');v('pk',S.pk);v('ti0',S.i0);v('ti',S.i);
+['m1','m2','m3','m4'].forEach((id,k)=>$$(id).textContent=S.m[k]);
+document.querySelectorAll('#simTl button').forEach((x,k)=>x.classList.toggle('on',k===si))}
+$$('simPrev').onclick=()=>simGo(si-1);$$('simNext').onclick=()=>simGo(si+1);$$('simRe').onclick=()=>simGo(0);
+$$('simPlay').onclick=e=>{simP=!simP;e.target.textContent=simP?'Jeda':'Putar'};
+(function(){
+const svg=$$('simSvg'),stage=$$('cineStage'),ttl=$$('cTitle'),sub=$$('simSub'),fade=$$('cFade'),prog=$$('cProg').firstElementChild;
+let cx={x:320,y:150,z:1},tg={x:320,y:150,z:1},el=0,dur=5000,introMs=0,intro=false,voice=false,said=false,speaking=false,tok=0,last=performance.now();
+const orig=simGo;
+function speak(t){if(!window.speechSynthesis)return;speechSynthesis.cancel();const id=++tok,u=new SpeechSynthesisUtterance(t);u.lang='id-ID';u.rate=.95;speaking=true;u.onend=u.onerror=()=>{if(id===tok)speaking=false};speechSynthesis.speak(u)}
+function stopSpeech(){tok++;speaking=false;if(window.speechSynthesis)speechSynthesis.cancel()}
+simGo=function(i){orig(i);const S=SIM[si],c=S.cam||[320,150,1];tg={x:c[0],y:c[1],z:c[2]};
+fade.classList.remove('go');void fade.offsetWidth;fade.classList.add('go');
+$$('cSc').textContent='ADEGAN '+(si+1)+' / '+SIM.length;
+intro=!!S.title;introMs=intro?2600:0;
+if(intro){ttl.querySelector('h3').textContent=S.title[0];ttl.querySelector('p').textContent=S.title[1];ttl.classList.add('on')}else ttl.classList.remove('on');
+sub.classList.toggle('hide',intro);
+el=0;dur=Math.max(5000,S.t.length*72)+introMs;said=false;stopSpeech()};
+function tick(now){const dt=Math.min(100,now-last);last=now;
+cx.x+=(tg.x-cx.x)*.04;cx.y+=(tg.y-cx.y)*.04;cx.z+=(tg.z-cx.z)*.04;
+const t=now/1000,z=cx.z*(1+.015*Math.sin(t*.5)),w=640/z,h=300/z;
+let x=cx.x+Math.sin(t*.4)*3-w/2,y=cx.y+Math.cos(t*.3)*2-h/2;x=Math.max(0,Math.min(640-w,x));y=Math.max(0,Math.min(300-h,y));
+svg.setAttribute('viewBox',x.toFixed(1)+' '+y.toFixed(1)+' '+w.toFixed(1)+' '+h.toFixed(1));
+if(document.body.dataset.pg==='sim'){
+if(simP){el+=dt;
+if(intro&&el>=introMs){intro=false;ttl.classList.remove('on');sub.classList.remove('hide')}
+if(!intro&&voice&&!said){said=true;speak(SIM[si].t)}
+if(el>=dur&&!speaking)simGo(si+1)}
+prog.style.width=((si+Math.min(1,el/dur))/SIM.length*100)+'%'}
+else if(speaking){stopSpeech()}
+requestAnimationFrame(tick)}
+$$('simPlay').addEventListener('click',()=>{if(!window.speechSynthesis)return;simP?speechSynthesis.resume():speechSynthesis.pause()});
+$$('simVoice').onclick=e=>{voice=!voice;e.target.textContent=voice?'🔊 Narasi: Hidup':'🔇 Narasi: Mati';if(voice){said=false}else stopSpeech()};
+$$('simFs').onclick=()=>{if(document.fullscreenElement)document.exitFullscreen();else if(stage.requestFullscreen)stage.requestFullscreen();else if(stage.webkitRequestFullscreen)stage.webkitRequestFullscreen()};
+requestAnimationFrame(tick)})();
+simGo(0);
 renderCalc();go('3d');
 
 size();upd(540);calc();logRead();drawMon();show(null);loop();
