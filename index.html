@@ -62,7 +62,7 @@ body[data-pg="3d"] #pages{display:none}body:not([data-pg="3d"]) #side,body:not([
 .lmp{opacity:.4;transition:all .5s}.lmp.lit{opacity:1;filter:drop-shadow(0 0 6px #ffcc55)}.mv{transition:transform .9s ease}.cv{opacity:0;transform:scale(1.6);transform-box:fill-box;transform-origin:center;transition:all .8s}.cv.on{opacity:.95;transform:none}
 #simSub{background:#0f1b33;color:#fff;border-radius:8px;padding:12px 16px;margin-top:8px;min-height:3.6em;font-size:16px;line-height:1.4;animation:fadein .6s}#simTl button{width:26px;height:26px;border-radius:50%;border:1px solid var(--bd);background:var(--pn);color:var(--tx);cursor:pointer;font-size:11px}#simTl button.on{background:var(--ac);color:#fff;border-color:var(--ac)}
 
-#cineStage{position:relative;width:100%;aspect-ratio:640/300;background:#05080f;overflow:hidden;border-radius:8px}
+#cineStage{position:relative;width:100%;aspect-ratio:16/9;background:#05080f;overflow:hidden;border-radius:8px}
 #cineStage .vig{position:absolute;inset:0;pointer-events:none;z-index:1;box-shadow:inset 0 0 110px 20px rgba(0,0,0,.5);background:radial-gradient(ellipse at center,transparent 55%,rgba(0,0,0,.35))}
 .lb{position:absolute;left:0;right:0;height:9%;background:#000;z-index:3;display:flex;align-items:center;justify-content:space-between;padding:0 3%;color:#9fb0c8;font:600 clamp(8px,1.3vw,12px) system-ui,sans-serif;letter-spacing:.18em}
 .lb.t{top:0}.lb.b{bottom:0}
@@ -77,7 +77,7 @@ body[data-pg="3d"] #pages{display:none}body:not([data-pg="3d"]) #side,body:not([
 #cineStage #simSub.hide{opacity:0}
 #cProg{position:absolute;left:0;right:0;bottom:0;height:3px;z-index:5;background:rgba(255,255,255,.15)}#cProg i{display:block;height:100%;width:0;background:var(--ac)}
 #cineStage:fullscreen{width:100vw;height:100vh;aspect-ratio:auto;border-radius:0}
-</style></head><body data-pg="3d">
+#simSvg{display:none!important}#cv2{position:absolute;inset:0;width:100%;height:100%;display:block}#hdb{position:absolute;right:3%;top:11%;z-index:4;background:#1f6fe8;color:#fff;font:700 11px system-ui;padding:2px 7px;border-radius:4px;letter-spacing:.1em}</style></head><body data-pg="3d">
 <header><b>3D UV-Vis SPECTROPHOTOMETER SIMULATOR</b><span>Referensi visual: Shimadzu UV-1700 · double beam · educational</span><nav id="nav"><button data-pg="3d" class="on">Alat 3D</button><button data-pg="calc">Perhitungan</button><button data-pg="cal">Kurva Kalibrasi</button><button data-pg="cr">Cr(VI) Kulit</button><button data-pg="sim">Simulasi Alat</button><button data-pg="info">Info Alat</button></nav></header>
 <aside id="side"><h4>Components</h4><div id="list"></div></aside>
 <main id="stage"><canvas id="cv"></canvas>
@@ -122,7 +122,7 @@ body[data-pg="3d"] #pages{display:none}body:not([data-pg="3d"]) #side,body:not([
 <label>Jenis input</label><select id="crMd" style="background:#fffc;border:1px solid var(--bd);border-radius:5px;padding:4px"><option value="A">Absorbansi (A)</option><option value="C">Konsentrasi (C)</option></select><label id="crLa">A sampel + DPC</label><input type="number" id="crA" value="0.045" step=".001"><label id="crLb">A koreksi warna (tanpa DPC)</label><input type="number" id="crB" value="0.010" step=".001">
 <label>Massa kulit (g)</label><input type="number" id="crM" value="2.00" step=".01"><label>Volume labu takar (mL)</label><input type="number" id="crV" value="100"><label>Faktor pengenceran tambahan</label><input type="number" id="crD" value="1"></div>
 <div id="crR" style="margin-top:8px"></div></div></div></div>
-<div class="pg" id="pg-sim"><div class="pgw" style="max-width:980px"><h2>Simulasi Kerja Alat</h2><p class="mu">Tayangan sinematik otomatis dari sampel dimasukkan sampai hasil muncul di komputer: kamera bergerak mengikuti jalur cahaya, lengkap dengan subtitle (dan opsi narasi suara). Ini representasi edukasi yang disederhanakan.</p>
+<div class="pg" id="pg-sim"><div class="pgw" style="max-width:980px"><h2>Simulasi Kerja Alat</h2><p class="mu">Video sinematik 3D HD memakai komponen alat asli, dari sampel dimasukkan sampai hasil muncul di komputer: kamera bergerak mengikuti jalur cahaya, lengkap dengan subtitle, narasi suara, dan tombol rekam untuk mengunduh video 1080p. Ini representasi edukasi yang disederhanakan.</p>
 <div class="card" style="padding:8px"><div id="cineStage"><svg id="simSvg" viewBox="0 0 640 300" style="width:100%;height:100%;display:block;background:linear-gradient(160deg,#d4e4f6,#f2f7fd)">
 <defs><path id="cab" d="M506,146 C526,146 526,112 548,112"/></defs>
 <rect x="10" y="60" width="500" height="200" rx="14" fill="#e6d9ac" stroke="#9a8a5a" stroke-width="2"/>
@@ -146,7 +146,7 @@ body[data-pg="3d"] #pages{display:none}body:not([data-pg="3d"]) #side,body:not([
 <rect x="548" y="66" width="84" height="92" rx="6" fill="#1f2937"/><rect x="553" y="71" width="74" height="70" fill="#0b1a33"/><rect x="580" y="158" width="20" height="10" fill="#4b5563"/><rect x="568" y="168" width="44" height="6" rx="2" fill="#4b5563"/>
 <text id="m1" x="557" y="84" font-size="8" fill="#fff"></text><text id="m2" x="557" y="99" font-size="9" fill="#9fb8ff"></text><text id="m3" x="557" y="125" font-size="22" font-weight="700" fill="#7fe3a0"></text><text id="m4" x="557" y="137" font-size="8" fill="#ffe28a"></text>
 <g font-size="9" fill="#35506b" text-anchor="middle"><text x="40" y="86">Lampu D2</text><text x="40" y="214">Halogen</text><text x="95" y="172">Cermin pengalih</text><text x="141" y="116">Entrance slit</text><text x="200" y="182">Grating</text><text x="261" y="116">Exit slit</text><text x="320" y="214">Beam splitter</text><text x="400" y="80">Reference</text><text x="400" y="216">Sampel</text><text x="464" y="76" id="ti0" style="opacity:0;transition:opacity .5s" font-weight="700" fill="#1f6fe8">I₀ = 100</text><text x="464" y="222" id="ti" style="opacity:0;transition:opacity .5s" font-weight="700" fill="#c2185b">I = 40</text><text x="464" y="236">Detektor</text><text x="496" y="176">ADC</text><text x="590" y="188" font-size="10" font-weight="700">Komputer</text><text x="527" y="104" font-size="8">USB</text></g>
-</svg><div class="vig"></div><div class="lb t"><span id="cSc"></span><span>UV-1700 · SIMULASI</span></div><div class="lb b"></div><div id="cFade"></div><div id="cTitle"><h3></h3><p></p></div><div id="simSub"></div><div id="cProg"><i></i></div></div>
+</svg><div class="vig"></div><div class="lb t"><span id="cSc"></span><span>UV-1700 · 3D HD · SIMULASI</span></div><div class="lb b"></div><div id="cFade"></div><div id="cTitle"><h3></h3><p></p></div><div id="simSub"></div><div id="cProg"><i></i></div></div>
 <div style="display:flex;gap:6px;flex-wrap:wrap;margin-top:8px;align-items:center"><button class="btn" id="simPrev">◀</button><button class="btn" id="simPlay">Jeda</button><button class="btn" id="simNext">▶</button><button class="btn" id="simRe">Ulangi</button><button class="btn" id="simVoice">🔇 Narasi: Mati</button><button class="btn" id="simFs">⛶ Layar penuh</button><span id="simTl" style="display:flex;gap:4px;flex-wrap:wrap;margin-left:6px"></span></div></div></div></div>
 <div class="pg" id="pg-info"><div class="pgw"><h2>Info Alat</h2><p class="mu">Ringkasan instrumen yang dijadikan referensi.</p><div class="card"><h4 style="margin-top:0">Spesifikasi Shimadzu UV-1700</h4><div class="r"><span>Model</span><b>Shimadzu UV-1700 PharmaSpec (sudah tidak dijual)</b></div><div class="r"><span>Rentang panjang gelombang</span><b>190–1100 nm</b></div><div class="r"><span>Spectral bandwidth</span><b>1 nm (190–900 nm)</b></div><div class="r"><span>Sistem fotometri</span><b>Double-beam optics</b></div><div class="r"><span>Sumber cahaya</span><b>Lampu deuterium + lampu halogen</b></div><div class="r"><span>Pergantian lampu</span><b>Otomatis, 295–364 nm (default 340,8 nm)</b></div><div class="r"><span>Monokromator</span><b>Aberration-corrected blazed holographic grating</b></div><div class="r"><span>Detektor</span><b>Silicon photodiode</b></div><div class="r"><span>Stray light</span><b>Maks. 0,04 %</b></div><div class="r"><span>Rentang fotometrik</span><b>−0,5 s.d. +3,0 Abs</b></div><div class="r"><span>Jarak antar berkas</span><b>100 mm</b></div><div class="r"><span>Berat</span><b>±17 kg</b></div><p style="font-size:12px;color:var(--mu);margin-top:8px">Mode ukur: photometric (termasuk multi-wavelength), spectrum, dan kinetics lewat software UVProbe; mendukung validasi hardware (IQ/OQ). Sumber: <a href="https://speciation.net/Appl/Techniques/technique.html?id=1297" target="_blank" rel="noopener" style="color:var(--ac)">daftar spesifikasi Shimadzu Europe</a> dan <a href="https://chem.uci.edu/~dmitryf/LSL/manuals/Shimadzu%20UV-1700%20users%20guide.pdf" target="_blank" rel="noopener" style="color:var(--ac)">UV-1700 User's Guide</a>. Angka pada brosur reseller bisa berbeda; cek datasheet Shimadzu untuk unit kamu.</p></div></div></div></section>
 <footer><div class="s"><small style="color:var(--mu)">WAVELENGTH 190 — 1100 nm</small><input type="range" id="sl" min="190" max="1100" value="540"></div>
@@ -417,7 +417,7 @@ document.querySelectorAll('[data-v]').forEach(b=>b.onclick=()=>{const v=VW[b.dat
 $('#sl').oninput=e=>upd(e.target.value);$('#wn').onchange=e=>upd(e.target.value);['#i0','#ii','#bb','#ee'].forEach(s=>$(s).oninput=calc);
 ['#i0','#ii','#bb','#ee','#wn','#sl'].forEach(s=>$(s).addEventListener('change',()=>{logRead();drawMon()}));
 // ---- loop
-let tm=0;function loop(){requestAnimationFrame(loop);if(document.body.dataset.pg!=='3d')return;tm+=.016;
+let tm=0;function loop(){requestAnimationFrame(loop);const PG=document.body.dataset.pg;if(PG!=='3d'&&PG!=='sim')return;tm+=.016;
 ex+=(exT-ex)*.07;lid+=(lidT-lid)*.08;const e=ex*ex*(3-2*ex);
 buildCable(e);topG.position.y=e*2.8;fr.position.z=e*2.4;bk.position.z=-e*2.4;lf.position.x=-e*2.4;rt.position.x=e*2.4;lidP.rotation.x=-lid*1.75;cpuSide.position.x=.45+e*1.7;cpuSide.rotation.z=-e*.12;dust.rotation.y+=.0005;dust.position.y=Math.sin(tm*.3)*.2;
 sw.rotation.y+=(swT-sw.rotation.y)*.12;fw.rotation.x+=.012;fb.rotation.z+=.16;
@@ -428,7 +428,7 @@ gD.material.emissive.setHex(useD?0x5577ff:0x080810);gW.material.emissive.setHex(
 const p=.55+.45*Math.sin(tm*5);
 pick.forEach(o=>{if(!o.material.emissive)return;const id=o.userData.id;let h=null;if(id===sel)h=[0x1a66ff,p];else if(id===hov)h=[0x0d3a85,1];
 if(h){o.material.emissive.setHex(h[0]);o.material.emissiveIntensity=h[1]}else if(o!==gD&&o!==gW&&!(o.material.userData&&o.material.userData.k)){if(o.material.color.getHex()!==0x4b34c8){o.material.emissive.setHex(0);o.material.emissiveIntensity=1}else{o.material.emissive.setHex(0x1a0f66);o.material.emissiveIntensity=1}}});
-[bm,bA,bB].forEach(b=>b.upd(tm));R.render(S,cam)}
+[bm,bA,bB].forEach(b=>b.upd(tm));PG==='sim'?simRender():R.render(S,cam)}
 
 // ---- calibration
 let rows=[[2,.252],[4,.501],[6,.748],[8,1.003],[10,1.249]];
@@ -639,6 +639,57 @@ $$('simPlay').addEventListener('click',()=>{if(!window.speechSynthesis)return;si
 $$('simVoice').onclick=e=>{voice=!voice;e.target.textContent=voice?'🔊 Narasi: Hidup':'🔇 Narasi: Mati';if(voice){said=false}else stopSpeech()};
 $$('simFs').onclick=()=>{if(document.fullscreenElement)document.exitFullscreen();else if(stage.requestFullscreen)stage.requestFullscreen();else if(stage.webkitRequestFullscreen)stage.webkitRequestFullscreen()};
 requestAnimationFrame(tick)})();
+
+// ===== 3D HD CINEMA =====
+(function(){
+R.setPixelRatio(Math.min(3,Math.max(2,devicePixelRatio)));
+S.traverse(o=>{if(o.isMesh&&o.geometry.type==='CylinderGeometry'){const p=o.geometry.parameters;o.geometry.dispose();o.geometry=new THREE.CylinderGeometry(p.radiusTop,p.radiusBottom,p.height,64)}
+if(o.isMesh&&o.material&&o.material.map)o.material.map.anisotropy=R.capabilities.getMaxAnisotropy()});
+const dl2=new THREE.DirectionalLight(0xcfe4ff,.5);dl2.position.set(-6,5,-4);S.add(dl2);
+const cs=$$('cineStage'),c2=document.createElement('canvas');c2.id='cv2';cs.prepend(c2);
+const R2=new THREE.WebGLRenderer({canvas:c2,antialias:true,preserveDrawingBuffer:true});R2.setClearColor(0x9fd0ff);
+const cam2=new THREE.PerspectiveCamera(36,16/9,.1,100),K={t:v3(3.2,1,-.5),th:.5,ph:1.15,r:18},KT={t:v3(3.2,1,-.5),th:.5,ph:1.15,r:18};
+const hd=document.createElement('div');hd.id='hdb';hd.textContent='HD 3D';cs.appendChild(hd);
+let recOn=false,recSeen=0,rec=null,chunks=[];
+function size2(){if(recOn)return;R2.setPixelRatio(Math.min(3,Math.max(2,devicePixelRatio)));const w=cs.clientWidth||960,h=cs.clientHeight||540;R2.setSize(w,h,false);cam2.aspect=w/h;cam2.updateProjectionMatrix()}
+new ResizeObserver(size2).observe(cs);
+// silica gel
+const silG=new THREE.Group();silG.visible=false;S.add(silG);let silT=v3(-2.1,.62,-.05);silG.position.copy(silT);
+silG.add(new THREE.Mesh(new THREE.BoxGeometry(.55,.12,.32),M(0xf4f1e6)));
+for(let a=0;a<6;a++){const b=new THREE.Mesh(new THREE.SphereGeometry(.035,16,12),M(a%2?0xe8851c:0x2b6fd6));b.position.set(-.2+a*.08,.08,(a%3-1)*.07);silG.add(b)}
+const MW=mw(0,1.8,0);
+const CAM3=[[3.2,1,-.5,.55,1.1,17],[1.8,1.7,.2,.15,1.15,7.5],[-2.1,1,.2,.3,.8,7],[-3,.6,1.1,.25,.85,9.5],[-2.1,.9,.2,.3,.8,5.5],[1.2,1,-.65,.9,.8,8.5],[0,1.1,-.65,.7,.8,6.5],[-1.3,1,-.1,.8,.8,7],[-2.6,1,-.1,1,.85,6.5],[-2.1,.9,.2,.3,.8,5.5],[-2.1,1,-.1,.7,.85,7],[-1.8,.8,.6,.9,.85,8.5],[3.6,.8,-2.6,.9,1.15,11],[MW.x,MW.y,MW.z,.6,1.5,6.2],[3.2,1,-.5,.55,1.1,17]];
+function scene3d(i){const S0=SIM[i],c=CAM3[i],b=S0.b||0;
+KT.t.set(c[0],c[1],c[2]);KT.th=c[3];KT.ph=c[4];KT.r=c[5];
+setEx((b>=1&&!S0.lid&&!S0.pk)?1:0);lidT=S0.lid?1:0;sel=null;upd(540);
+pick.forEach(o=>{if(o.userData.id==='refcell')o.visible=!!S0.ref;if(o.userData.id==='samcell')o.visible=!!S0.sam});
+liq.material.color.set(S0.sc==='#b0206a'?0xb0206a:0xcfe8ff);
+silT=S0.sg===2?v3(-4,0,2.5):v3(-2.1,.62,-.05);silG.visible=true;
+[bm,bA,bB].forEach((x,k)=>{x.line.visible=x.pt.visible=k?b>=3:b>=1;x.op(1)});if(S0.dim)bB.op(.3);
+$('#ii').value=S0.m[2]===''?'':(S0.m[2]==='0.000'?100:40);drawMon()}
+function reset3d(){silG.visible=false;[bm,bA,bB].forEach(x=>{x.line.visible=x.pt.visible=true;x.op(1)});pick.forEach(o=>{if(o.userData.id==='refcell'||o.userData.id==='samcell')o.visible=true});liq.material.color.set(0x3a7bd5);$('#ii').value=40;drawMon()}
+window.simRender=function(){K.t.lerp(KT.t,.045);['th','ph','r'].forEach(k=>K[k]+=(KT[k]-K[k])*.045);const th=K.th+Math.sin(tm*.3)*.1;
+cam2.position.set(K.t.x+K.r*Math.sin(K.ph)*Math.sin(th),K.t.y+K.r*Math.cos(K.ph),K.t.z+K.r*Math.sin(K.ph)*Math.cos(th));cam2.lookAt(K.t);
+silG.position.lerp(silT,.05);R2.render(S,cam2);if(recOn)comp()};
+// recording 1080p with burned-in subtitles
+const cc=document.createElement('canvas');cc.width=1920;cc.height=1080;
+function wrap(g,t,w){const o=[];let l='';t.split(' ').forEach(x=>{if(g.measureText(l+x).width>w){o.push(l);l=''}l+=x+' '});o.push(l);return o}
+function comp(){const g=cc.getContext('2d');g.drawImage(c2,0,0,1920,1080);const tt=$$('cTitle').classList.contains('on');
+if(tt){g.fillStyle='rgba(3,8,18,.82)';g.fillRect(0,0,1920,1080);g.fillStyle='#fff';g.textAlign='center';g.font='700 84px Georgia,serif';g.fillText($$('cTitle').querySelector('h3').textContent,960,520);g.fillStyle='#ffd77a';g.font='34px system-ui';g.fillText($$('cTitle').querySelector('p').textContent.toUpperCase(),960,590)}
+else{const t=$$('simSub').textContent;g.font='500 44px system-ui,sans-serif';const L=wrap(g,t,1560),h=L.length*58+30;g.fillStyle='rgba(0,0,0,.68)';g.fillRect(160,1010-h,1600,h);g.fillStyle='#fff';g.textAlign='center';L.forEach((l,k)=>g.fillText(l.trim(),960,1010-h+62+k*58))}
+g.fillStyle='rgba(255,255,255,.8)';g.font='600 28px system-ui';g.textAlign='left';g.fillText($$('cSc').textContent+'  ·  UV-1700 3D HD',30,50);
+g.fillStyle='#1f6fe8';g.fillRect(0,1074,1920*parseFloat($$('cProg').firstElementChild.style.width||0)/100,6)}
+function stopRec(){recOn=false;if(rec&&rec.state!=='inactive')rec.stop();size2();$$('simRec').textContent='⏺ Rekam video HD'}
+const rb=document.createElement('button');rb.className='btn';rb.id='simRec';rb.textContent='⏺ Rekam video HD';$$('simFs').after(rb);
+rb.onclick=()=>{if(recOn){stopRec();return}
+if(!window.MediaRecorder||!cc.captureStream){alert('Browser belum mendukung perekaman video. Gunakan Chrome/Edge/Firefox di komputer.');return}
+const mt=['video/webm;codecs=vp9','video/webm;codecs=vp8','video/webm'].find(m=>MediaRecorder.isTypeSupported(m));
+chunks=[];rec=new MediaRecorder(cc.captureStream(30),{mimeType:mt,videoBitsPerSecond:12e6});rec.ondataavailable=e=>e.data.size&&chunks.push(e.data);
+rec.onstop=()=>{const a=document.createElement('a');a.href=URL.createObjectURL(new Blob(chunks,{type:'video/webm'}));a.download='spektrofotometer-3d-hd.webm';a.click()};
+recOn=true;recSeen=0;R2.setPixelRatio(1);R2.setSize(1920,1080,false);cam2.aspect=16/9;cam2.updateProjectionMatrix();simP=1;$$('simPlay').textContent='Jeda';rec.start(500);rb.textContent='⏹ Hentikan & unduh';simGo(0)};
+const g0=go;go=function(p){g0(p);if(p==='sim'){size2();scene3d(si)}else reset3d()};
+const o2=simGo;simGo=function(i){if(recOn){if(((i%SIM.length)+SIM.length)%SIM.length===0&&recSeen){o2(i);stopRec();return}recSeen=1}o2(i);scene3d(si)};
+})();
 simGo(0);
 renderCalc();go('3d');
 
