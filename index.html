@@ -22,7 +22,7 @@ table{width:100%;border-collapse:collapse;margin:6px 0}th{font-size:10px;color:v
 .card{background:rgba(255,255,255,.55);border:1px solid var(--bd);border-radius:8px;padding:10px;margin-bottom:10px}
 .card h3{margin:0 0 6px;font-size:15px;color:var(--tx)}.card p{margin:4px 0}.card .l{color:var(--ac);font-size:10px;letter-spacing:.1em;text-transform:uppercase;margin-top:7px}
 .f{display:grid;grid-template-columns:1fr 90px;gap:5px 8px;align-items:center}
-input[type=number],input[type=text]{width:100%;box-sizing:border-box;background:#fffc;border:1px solid var(--bd);color:var(--tx);border-radius:5px;padding:4px 6px;font:inherit}
+input[type=number]{width:100%;background:#fffc;border:1px solid var(--bd);color:var(--tx);border-radius:5px;padding:4px 6px;font:inherit}
 .r{display:flex;justify-content:space-between;border-top:1px solid var(--bd);padding:3px 0}.r b{color:#0e9f5a;font-variant-numeric:tabular-nums}
 footer{grid-column:1/4;display:flex;align-items:center;gap:18px;padding:0 16px;background:var(--pn);border-top:1px solid var(--bd);backdrop-filter:blur(8px)}
 footer .s{flex:1;min-width:160px}input[type=range]{width:100%;accent-color:var(--ac)}
@@ -118,7 +118,7 @@ body[data-pg="3d"] #pages{display:none}body:not([data-pg="3d"]) #side,body:not([
 <button class="btn" id="cra">+ Standar</button> <button class="btn" id="crd">− Standar</button> <button class="btn" id="crx">Data contoh</button>
 <canvas id="crc" width="600" height="320" style="width:100%;height:auto;margin-top:8px;background:#fff8;border-radius:6px"></canvas><div id="crq" style="margin-top:6px"></div></div>
 <div class="card"><h4 style="margin-top:0">3. Sampel kulit &amp; perhitungan kadar</h4>
-<div class="f"><label>Nama sampel</label><input type="text" id="crP" placeholder="Ketik nama sampel" autocomplete="off">
+<div class="f"><label>Contoh sampel</label><select id="crP" style="background:#fffc;border:1px solid var(--bd);border-radius:5px;padding:4px"><option value="A">Kulit A (kadar rendah)</option><option value="B">Kulit B (kadar tinggi)</option><option value="C">Custom</option></select>
 <label>Jenis input</label><select id="crMd" style="background:#fffc;border:1px solid var(--bd);border-radius:5px;padding:4px"><option value="A">Absorbansi (A)</option><option value="C">Konsentrasi (C)</option></select><label id="crLa">A sampel + DPC</label><input type="number" id="crA" value="0.045" step=".001"><label id="crLb">A koreksi warna (tanpa DPC)</label><input type="number" id="crB" value="0.010" step=".001">
 <label>Massa kulit (g)</label><input type="number" id="crM" value="2.00" step=".01"><label>Volume labu takar (mL)</label><input type="number" id="crV" value="100"><label>Faktor pengenceran tambahan</label><input type="number" id="crD" value="1"></div>
 <div id="crR" style="margin-top:8px"></div></div></div></div>
@@ -468,7 +468,6 @@ const mm=(l,v)=>`<div class="r"><span>${l}</span><b>${v}</b></div>`;
 const METH=[
 {n:'Beer-Lambert: A = εbc',d:'Absorbansi berbanding lurus dengan konsentrasi dan panjang lintasan: makin pekat larutan, makin banyak cahaya terserap.',f:[['e','ε (L/mol·cm)',1000],['b','b (cm)',1],['c','c (mol/L)',.0005]],run:v=>{const A=v.e*v.b*v.c;return{st:[`A = ε·b·c = ${fm(v.e)} × ${fm(v.b)} × ${fm(v.c)}`],r:['Absorbansi (A)',fm(A)],ex:[mm('%T = 10^(2−A)',fm(Math.pow(10,2-A))+' %')]}}},
 {n:'Absorbansi → Konsentrasi',d:'Dari A, ε, dan b yang diketahui: c = A/(εb). Isi Mr jika ingin hasil dalam mg/L.',f:[['A','Absorbansi (A)',.35],['e','ε (L/mol·cm)',1000],['b','b (cm)',1],['M','Mr (g/mol, opsional)',0]],run:v=>{const c=v.A/(v.e*v.b);return{st:[`c = A/(ε·b) = ${fm(v.A)} / (${fm(v.e)} × ${fm(v.b)})`],r:['Konsentrasi (c)',fm(c)+' mol/L'],ex:v.M>0?[mm('c dalam mg/L = c × Mr × 1000',fm(c*v.M*1000)+' mg/L')]:[]}}},
-{n:'Single Standard',d:'Satu larutan standar dibandingkan dengan sampel pada kondisi sama (hanya valid bila hubungan A–C linear melewati titik nol).',f:[['As','A standar',.4],['Cs','C standar',10],['Ax','A sampel',.3]],run:v=>{const c=v.Ax/v.As*v.Cs;return{st:[`C sampel = (A sampel / A standar) × C standar = (${fm(v.Ax)} / ${fm(v.As)}) × ${fm(v.Cs)}`],r:['C sampel',fm(c)],ex:[]}}},
 {n:'Faktor Pengenceran',d:'FP = V labu / V sampel yang dipipet. C asli = C terukur × FP.',f:[['C','C terukur',2.5],['Vs','V sampel dipipet (mL)',2],['Vf','V labu ukur (mL)',10]],run:v=>{const df=v.Vf/v.Vs;return{st:[`FP = V labu / V sampel = ${fm(v.Vf)} / ${fm(v.Vs)} = ${fm(df)}`,`C asli = C terukur × FP = ${fm(v.C)} × ${fm(df)}`],r:['C asli',fm(v.C*df)],ex:[]}}},
 {n:'%T → Absorbansi',d:'A = −log₁₀(T) = 2 − log₁₀(%T).',f:[['P','%T',40]],run:v=>{const T=v.P/100;return{st:[`T = %T/100 = ${fm(T)}`,`A = −log₁₀(T) = −log₁₀(${fm(T)})`],r:['Absorbansi (A)',fm(-Math.log10(T))],ex:[]}}},
 {n:'Absorbansi → %T',d:'T = 10^(−A), %T = T × 100.',f:[['A','Absorbansi (A)',.398]],run:v=>{const T=Math.pow(10,-v.A);return{st:[`T = 10^(−A) = 10^(−${fm(v.A)}) = ${fm(T)}`],r:['%T',fm(T*100)+' %'],ex:[]}}}];
@@ -483,14 +482,16 @@ $('#cmF').innerHTML=M.f.map(f=>`<label>${f[1]}</label><input type="number" step=
 M.f.forEach(f=>$('#cf_'+f[0]).oninput=runCalc);runCalc()}
 
 let crRows=[[.1,.079],[.2,.157],[.3,.232],[.4,.311],[.5,.388]];
+const CRP={A:{A:[.045,.010],C:[.056,.011]},B:{A:[.260,.010],C:[.335,.011]}};
 function crTbl(){$('#crt').innerHTML=crRows.map((r,i)=>`<tr><td>S${i+1}</td><td><input type="number" step="any" data-i="${i}" data-j="0" value="${r[0]}"></td><td><input type="number" step="any" data-i="${i}" data-j="1" value="${r[1]}"></td></tr>`).join('');
 document.querySelectorAll('#crt input').forEach(e=>e.oninput=()=>{crRows[e.dataset.i][e.dataset.j]=e.value;crCalc()})}
 $('#cra').onclick=()=>{if(crRows.length<8)crRows.push(['','']);crTbl();crCalc()};$('#crd').onclick=()=>{if(crRows.length>2)crRows.pop();crTbl();crCalc()};
 $('#crx').onclick=()=>{crRows=[[.1,.079],[.2,.157],[.3,.232],[.4,.311],[.5,.388]];crTbl();crCalc()};
 $('#cr3d').onclick=()=>{upd(540);go('3d')};
 function crLab(){const c=$('#crMd').value==='C';$('#crLa').textContent=c?'C sampel + DPC (mg/L)':'A sampel + DPC';$('#crLb').textContent=c?'C koreksi warna (mg/L)':'A koreksi warna (tanpa DPC)'}
-$('#crP').oninput=crCalc;$('#crMd').onchange=()=>{crLab();crCalc()};
-['#crA','#crB','#crM','#crV','#crD'].forEach(q=>$(q).oninput=crCalc);$('#crL').oninput=crCalc;
+function crFill(){const p=CRP[$('#crP').value];if(p){const q=p[$('#crMd').value];$('#crA').value=q[0];$('#crB').value=q[1]}}
+$('#crP').onchange=()=>{crFill();crCalc()};$('#crMd').onchange=()=>{crLab();crFill();crCalc()};
+['#crA','#crB','#crM','#crV','#crD'].forEach(q=>$(q).oninput=()=>{$('#crP').value='C';crCalc()});$('#crL').oninput=crCalc;
 function crAx(g,W,H,x0,x1,y1,xl,yl,fx){const L=60,B=44,T=14,Rr=14,X=v=>L+(v-x0)/(x1-x0)*(W-L-Rr),Y=v=>H-B-v/y1*(H-B-T);g.clearRect(0,0,W,H);g.strokeStyle='#5a7a9a55';g.fillStyle='#35506b';g.font='16px sans-serif';g.lineWidth=1;
 for(let i=0;i<=4;i++){const xv=x0+(x1-x0)*i/4,yv=y1*i/4;g.beginPath();g.moveTo(X(xv),T);g.lineTo(X(xv),H-B);g.moveTo(L,Y(yv));g.lineTo(W-Rr,Y(yv));g.stroke();g.textAlign='center';g.fillText(+xv.toPrecision(3),X(xv),H-B+18);g.textAlign='right';g.fillText(+yv.toPrecision(2),L-6,Y(yv)+5)}
 g.textAlign='center';g.fillText(xl,(W+L)/2,H-6);g.save();g.translate(14,(H-B)/2);g.rotate(-Math.PI/2);g.fillText(yl,0,0);g.restore();return{X,Y}}
@@ -501,10 +502,10 @@ if(d){m=(n*sxy-sx*sy)/d;b=(sy-m*sx)/n;const my=sy/n,st=pts.reduce((a,p)=>a+(p[1]
 const ok=isFinite(m)&&m>0;
 $('#crq').innerHTML=ok?mm('Persamaan',`A = ${fm(m)}C ${b<0?'−':'+'} ${fm(Math.abs(b))}`)+mm('R²',r2.toFixed(5))+(n<3?'<div class="wr">Gunakan minimal 3 standar.</div>':r2<.995?'<div class="wr">R² &lt; 0,995 — cek standar.</div>':''):'<div class="wr">Isi minimal 2 standar valid dengan slope positif.</div>';
 const md=$('#crMd').value,x1=parseFloat($('#crA').value),x2=parseFloat($('#crB').value)||0,mass=parseFloat($('#crM').value),V=parseFloat($('#crV').value),FP=parseFloat($('#crD').value)||1;
-const netIn=x1-x2,C=md==='A'?(ok?(netIn-b)/m:NaN):netIn,mg=C*V*FP/mass,net=md==='A'?netIn:(ok&&isFinite(C)?m*C+b:NaN);let h='';const nm=$('#crP').value.trim().replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const netIn=x1-x2,C=md==='A'?(ok?(netIn-b)/m:NaN):netIn,mg=C*V*FP/mass,net=md==='A'?netIn:(ok&&isFinite(C)?m*C+b:NaN);let h='';
 if(isFinite(x1)&&isFinite(C)&&mass>0&&V>0){const hi=mg>=3;
 h=(md==='A'?`<div class="stp">1. C bersih (konsentrasi terkoreksi) = C sampel − C koreksi warna<br>• C sampel = (A sampel − b)/m = (${fm(x1)} − ${fm(b)})/${fm(m)} = ${fm((x1-b)/m)} mg/L<br>• C koreksi warna = A koreksi/m = ${fm(x2)}/${fm(m)} = ${fm(x2/m)} mg/L <span style="color:var(--mu)">(tanpa DPC, jadi tanpa intersep)</span><br>• C bersih = ${fm((x1-b)/m)} − ${fm(x2/m)} = <b>${fm(C)} mg/L</b></div>`:`<div class="stp">1. C bersih (konsentrasi terkoreksi) = C sampel − C koreksi warna = ${fm(x1)} − ${fm(x2)} = <b>${fm(C)} mg/L</b></div>`)+`<div class="stp">2. C terukur = C bersih = <b>${fm(C)} mg/L</b> <span style="color:var(--mu)">(pada larutan ekstrak di labu takar)</span></div><div class="stp">3. Kadar Cr(VI) = (C × V × FP) / massa = (${fm(C)} × ${V} mL × ${fm(FP)}) / ${mass} g = <b>${fm(mg)} mg/kg</b></div>`+
-`<div class="r"><span>Kadar Cr(VI) dalam kulit${nm?' — '+nm:''}</span><b style="font-size:16px;color:${hi?'#d6336c':'#0e9f5a'}">${C<0?'< 0':fm(mg)} mg/kg</b></div>`+
+`<div class="r"><span>Kadar Cr(VI) dalam kulit</span><b style="font-size:16px;color:${hi?'#d6336c':'#0e9f5a'}">${C<0?'< 0':fm(mg)} mg/kg</b></div>`+
 `<div class="stp" style="border-color:${hi?'#d6336c':'#0e9f5a'}">${hi?'≥ 3 mg/kg: di atas batas yang umum dipakai (REACH Annex XVII entri 47 untuk kulit yang kontak kulit; juga batas kuantifikasi ISO 17075-1).':'< 3 mg/kg: di bawah batas 3 mg/kg (batas kuantifikasi ISO 17075-1 dan batas REACH).'}</div>`+(C<0?'<div class="wr">C terukur bernilai negatif: kemungkinan tidak terdeteksi.</div>':'')}
 else h='<div class="wr">Lengkapi data kalibrasi dan sampel.</div>';
 $('#crR').innerHTML=h;
